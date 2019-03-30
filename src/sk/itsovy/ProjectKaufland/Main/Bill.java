@@ -1,14 +1,19 @@
 package sk.itsovy.ProjectKaufland.Main;
 
+import sk.itsovy.ProjectKaufland.Items.Database.Database;
 import sk.itsovy.ProjectKaufland.Items.Drinks.DraftInterface;
 import sk.itsovy.ProjectKaufland.Items.Exceptions.BillException;
 import sk.itsovy.ProjectKaufland.Items.Food.Fruit;
 import sk.itsovy.ProjectKaufland.Items.Item;
 import sk.itsovy.ProjectKaufland.Items.PcsInterface;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static sk.itsovy.ProjectKaufland.Main.Globals.MAXITEMS;
@@ -17,8 +22,9 @@ public class Bill {
     private int count;
     private List<Item> list;
     public boolean open;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDate date= LocalDate.now();
+    private LocalTime time= LocalTime.now();
+    private Date datetime = new Date();
 
     public Bill() {
         this.list = new ArrayList<>();
@@ -26,10 +32,11 @@ public class Bill {
         open=true;
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) throws BillException{
         if(item!=null) {
             if(open==false){
-                String message= "Bill is closed biatch. It is not allowed to add any more items";
+                String message= "Bill is closed . It is not allowed to add any more items";
+                throw new StackOverflowError(message);
             }
             if(count==MAXITEMS){
                 String message= "Bill is pulny, maximum is"+MAXITEMS+"items";
@@ -48,30 +55,44 @@ public class Bill {
         }
     }
 
-    public void end(){
-        if(open){
-            date= LocalDate.now();
-            time= LocalTime.now();
-            System.out.println("Date:"+date);
-            System.out.println("Time:"+time);
+    public void end() throws SQLException {
+        if(open) {
+            System.out.println("Date:" + date);
+            System.out.println("Time:" + time);
+            Database db = Database.getInstance();
+            db.insertNewBill(this);
         }
+
         open=false;
         //nech sa cas generuje len raz
-
-
     }
-//    public  printDate(){
-//        java.util.Date date=new java.util.Date();
-//        return date;
-//    }
-//    System.out.println(date);
 
+    public Date getDatetime() {
+        return datetime;
+    }
     public int getCount(){
         return count;
     }
-//    public double getFinalPrice(){
-//        throw new IllegalThreadStateException("Method doesnt exist");
-//    }
+
+    public double getFinalPrice(){
+        double finalPrice=0;
+        for(Item item : list){
+            finalPrice = finalPrice + item.getTotalPrice();
+        }
+        return finalPrice;
+   }
+
+
+    // get final price in dollars
+
+    public double getFinalPriceDollars() throws IOException {
+        double finalUS = getFinalPrice();
+        return finalUS * Internet.getUSD();
+    }
+
+    public List<Item> getBill() {
+        return list;
+    }
 
     public void printBill(){
         if(count==0){
@@ -95,6 +116,6 @@ public class Bill {
 
 
 //    public String billError(){
-//
+//      urobit exception
 //    }
 }
