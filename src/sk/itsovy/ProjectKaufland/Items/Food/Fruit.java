@@ -3,7 +3,9 @@ package sk.itsovy.ProjectKaufland.Items.Food;
 import sk.itsovy.ProjectKaufland.Items.Food.Food;
 
 public class Fruit extends Food {
-        private double weight;
+
+
+    private double weight;
 
     public Fruit(String name, double price, int callories, double weight) {
         super(name, price, callories);
@@ -22,4 +24,9 @@ public class Fruit extends Food {
     public double getWeight() {
         return weight;
     }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
 }

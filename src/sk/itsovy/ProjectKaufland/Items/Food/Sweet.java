@@ -22,4 +22,9 @@ public class Sweet extends Food implements PcsInterface {
         return amount;
     }
 
+    @Override
+    public void setAmount(int Amount) {
+        amount = Amount;
+    }
+
 }

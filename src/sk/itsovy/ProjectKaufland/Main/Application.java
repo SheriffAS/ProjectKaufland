@@ -50,10 +50,13 @@ public class Application {
         Drink juice = new Draft("Relax", 1.30, true, 3);
         bill.addItem(juice);
 
+        Drink Dzus = new Draft("Relax", 1.30, true, 6);
+        bill.addItem(Dzus);
+
         Drink beer = new Draft("Birell nealko", 1, false, 1);
         bill.addItem(beer);
         bill.removeItem(beer);
-        bill.getCount();
+        System.out.println("POCET VELA JE MALO: "+bill.getCount());
         bill.getFinalPrice();
         bill.getFinalPriceDollars();
         bill.printBill();

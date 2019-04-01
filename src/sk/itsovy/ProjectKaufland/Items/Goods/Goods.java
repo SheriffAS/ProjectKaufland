@@ -27,4 +27,9 @@ public class Goods extends Item implements PcsInterface {
     public Category getType() {
         return type;
     }
+
+    @Override
+    public void setAmount(int Amount){
+        amount=Amount;
+    }
 }

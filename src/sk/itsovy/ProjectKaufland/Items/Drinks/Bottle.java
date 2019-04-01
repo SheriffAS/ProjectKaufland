@@ -26,7 +26,12 @@ public class Bottle extends Drink implements PcsInterface {
             return amount;
         }
 
-        @Override
+    @Override
+    public void setAmount(int Amount) {
+        amount = Amount;
+    }
+
+    @Override
         public double getTotalPrice() {
             return amount*getPrice();
         }

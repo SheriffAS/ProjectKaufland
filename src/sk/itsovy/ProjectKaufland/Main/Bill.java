@@ -1,6 +1,8 @@
 package sk.itsovy.ProjectKaufland.Main;
 
 import sk.itsovy.ProjectKaufland.Items.Database.Database;
+import sk.itsovy.ProjectKaufland.Items.Drinks.Bottle;
+import sk.itsovy.ProjectKaufland.Items.Drinks.Draft;
 import sk.itsovy.ProjectKaufland.Items.Drinks.DraftInterface;
 import sk.itsovy.ProjectKaufland.Items.Exceptions.BillException;
 import sk.itsovy.ProjectKaufland.Items.Food.Fruit;
@@ -32,20 +34,52 @@ public class Bill {
         open=true;
     }
 
-    public void addItem(Item item) throws BillException{
-        if(item!=null) {
-            if(open==false){
-                String message= "Bill is closed . It is not allowed to add any more items";
+    public void addItem(Item item) throws BillException {
+        Item itemTemp = checkItem(item);
+        if (itemTemp == item) {
+            if (open == false) {
+                String message = "Bill is closed . It is not allowed to add any more items";
                 throw new StackOverflowError(message);
             }
-            if(count==MAXITEMS){
-                String message= "Bill is pulny, maximum is"+MAXITEMS+"items";
+            if (count == MAXITEMS) {
+                String message = "Bill is pulny, maximum is" + MAXITEMS + "items";
                 throw new StackOverflowError(message);
+            } else {
+
+                list.add(item);
+                count++;
             }
 
-            list.add(item);
-            count++;
         }
+    }
+
+    public Item checkItem(Item item){
+        for(Item it :list){
+//            System.out.println("item: "+item.getName().toLowerCase());
+//            System.out.println("it : "+it.getName().toLowerCase());
+            if (item.getName().toLowerCase().equals(it.getName().toLowerCase())){
+                System.out.println("PRESLA PODMINKA");
+                if ( item.getClass().getName().equals(it.getClass().getName())){
+                    updateItem(item,it);
+                    return null;
+                }
+            }
+        }
+        return item;
+    }
+
+    public void updateItem(Item item, Item oldItem){
+         if (item instanceof Fruit && oldItem instanceof Fruit){
+             ((Fruit) oldItem).setWeight(((Fruit) item).getWeight()+((Fruit) oldItem).getWeight());
+         }
+
+         else if(item instanceof DraftInterface && oldItem instanceof DraftInterface){
+             ((DraftInterface) oldItem).setVolume(((DraftInterface) item).getVolume()+((DraftInterface) oldItem).getVolume());
+         }
+
+         else if(item instanceof PcsInterface && oldItem instanceof PcsInterface){
+             ((PcsInterface) oldItem).setAmount(((PcsInterface) item).getAmount()+((PcsInterface) oldItem).getAmount());
+         }
     }
 
     public void removeItem(Item item){

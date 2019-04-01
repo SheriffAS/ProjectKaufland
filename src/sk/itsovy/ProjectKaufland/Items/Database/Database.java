@@ -70,9 +70,8 @@ public class Database {
                             statement1.setDouble(4, ((PcsInterface) item).getAmount());
                             statement1.setString(5, "pcs");
                         }
+                        statement1.executeUpdate();
 
-
-                        int ex = statement1.executeUpdate();
                     }
 
                 } else {
