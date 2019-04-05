@@ -8,4 +8,11 @@ public class Globals {
     public static final String username = "pavuk";
     public static  final String password = "password";
 
+    //mongo
+    public static  final String mongoPort="27017";
+    public static  final String mongoClientUri="mongodb://localhost:"+mongoPort;;
+    public static  final String userMongo="userCreated";
+    public static  final String passwMongo="password";
+    public static final String dbnameMongo="kauflanddbMongo";
+
 }

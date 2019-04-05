@@ -1,8 +1,6 @@
 package sk.itsovy.ProjectKaufland.Main;
 
 import sk.itsovy.ProjectKaufland.Items.Database.Database;
-import sk.itsovy.ProjectKaufland.Items.Drinks.Bottle;
-import sk.itsovy.ProjectKaufland.Items.Drinks.Draft;
 import sk.itsovy.ProjectKaufland.Items.Drinks.DraftInterface;
 import sk.itsovy.ProjectKaufland.Items.Exceptions.BillException;
 import sk.itsovy.ProjectKaufland.Items.Food.Fruit;
@@ -11,7 +9,6 @@ import sk.itsovy.ProjectKaufland.Items.PcsInterface;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -27,6 +24,14 @@ public class Bill {
     private LocalDate date= LocalDate.now();
     private LocalTime time= LocalTime.now();
     private Date datetime = new Date();
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
 
     public Bill() {
         this.list = new ArrayList<>();
